@@ -57,7 +57,6 @@ static string compiler_path_lookup_helper(const string &compiler, const string &
     string::size_type end = 0;
     struct stat s;
     bool after_selflink = false;
-    string best_match;
 
     while (end != string::npos) {
         end = path.find_first_of(':', begin);
@@ -99,19 +98,14 @@ static string compiler_path_lookup_helper(const string &compiler, const string &
                 continue;
             }
 
-            best_match = part;
-
-            if (after_selflink) {
-                return part;
-            }
+            log_info() << "Found {" << compiler << ',' << compiler_path
+                       << "}: " << part << endl;
+            return part;
         }
     }
 
-    if (best_match.empty()) {
-        log_error() << "couldn't find any " << compiler << endl;
-    }
-
-    return best_match;
+    log_error() << "couldn't find any " << compiler << endl;
+    return "";
 }
 
 string compiler_path_lookup(const string& compiler)
