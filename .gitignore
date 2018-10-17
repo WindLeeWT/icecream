@@ -45,3 +45,5 @@ tests/test-suite.log
 tests/testargs
 tests/testargs.log
 tests/testargs.trs
+# ide
+.vscode
